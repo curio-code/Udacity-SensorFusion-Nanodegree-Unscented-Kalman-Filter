@@ -1,4 +1,4 @@
-/* \author Aaron Brown */
+/* Author:- Vivek Kumar Jaiswal */
 // Functions and structs used to render the enviroment
 // such as cars and the highway
 
@@ -11,7 +11,7 @@ void renderHighway(double distancePos, pcl::visualization::PCLVisualizer::Ptr& v
 	double roadLengthAhead = 50.0;
 	double roadLengthBehind = -15.0;
 	double roadWidth = 12.0;
-	double roadHeight = 0.2; 
+	double roadHeight = 0.2;
 
 	viewer->addCube(roadLengthBehind, roadLengthAhead, -roadWidth / 2, roadWidth / 2, -roadHeight, 0, .2, .2, .2, "highwayPavement");
 	viewer->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_REPRESENTATION, pcl::visualization::PCL_VISUALIZER_REPRESENTATION_SURFACE, "highwayPavement");
@@ -32,7 +32,7 @@ void renderHighway(double distancePos, pcl::visualization::PCLVisualizer::Ptr& v
 	while(markerPos < roadLengthBehind)
 		markerPos+=poleSpace;
 	int poleIndex = 0;
-	while(markerPos <= roadLengthAhead) 
+	while(markerPos <= roadLengthAhead)
 	{
 		//	left pole
 		viewer->addCube(-poleWidth/2+markerPos, poleWidth/2+markerPos, -poleWidth/2+roadWidth/2+poleCurve, poleWidth/2+roadWidth/2+poleCurve, 0, poleHeight, 1, 0.5, 0, "pole_"+std::to_string(poleIndex)+"l");
@@ -99,7 +99,7 @@ void renderPointCloud(pcl::visualization::PCLVisualizer::Ptr& viewer, const pcl:
 	viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
 }
 
-// Draw wire frame box with filled transparent color 
+// Draw wire frame box with filled transparent color
 void renderBox(pcl::visualization::PCLVisualizer::Ptr& viewer, Box box, int id, Color color, float opacity)
 {
 	if (opacity > 1.0)
@@ -141,10 +141,3 @@ void renderBox(pcl::visualization::PCLVisualizer::Ptr& viewer, BoxQ box, int id,
 	viewer->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, cubeFill);
 	viewer->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_OPACITY, opacity*0.3, cubeFill);
 }
-
-
-
-
-
-
-

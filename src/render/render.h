@@ -1,4 +1,4 @@
-/* \author Aaron Brown */
+/* Author:- Vivek Kumar Jaiswal */
 // Functions and structs used to render the enviroment
 // such as cars and the highway
 
@@ -80,7 +80,7 @@ struct Car
 	Car()
 		: position(Vect3(0,0,0)), dimensions(Vect3(0,0,0)), color(Color(0,0,0))
 	{}
- 
+
 	Car(Vect3 setPosition, Vect3 setDimensions, Color setColor, float setVelocity, float setAngle, float setLf, std::string setName)
 		: position(setPosition), dimensions(setDimensions), color(setColor), velocity(setVelocity), angle(setAngle), Lf(setLf), name(setName)
 	{
@@ -97,11 +97,11 @@ struct Car
 	Eigen::Quaternionf getQuaternion(float theta)
 	{
 		Eigen::Matrix3f rotation_mat;
-  		rotation_mat << 
+  		rotation_mat <<
   		cos(theta), -sin(theta), 0,
     	sin(theta),  cos(theta), 0,
     	0, 			 0, 		 1;
-    	
+
 		Eigen::Quaternionf q(rotation_mat);
 		return q;
 	}
@@ -115,7 +115,7 @@ struct Car
 		viewer->addCube(Eigen::Vector3f(position.x, position.y, dimensions.z*1/3), orientation, dimensions.x, dimensions.y, dimensions.z*2/3, name+"frame");
 		viewer->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, 0, 0, 0, name+"frame");
 		viewer->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_REPRESENTATION, pcl::visualization::PCL_VISUALIZER_REPRESENTATION_WIREFRAME, name+"frame");
-		
+
 
 		// render top of car
 		viewer->addCube(Eigen::Vector3f(position.x, position.y, dimensions.z*5/6), orientation, dimensions.x/2, dimensions.y, dimensions.z*1/3, name + "Top");
