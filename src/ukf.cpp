@@ -32,7 +32,7 @@ UKF::UKF() {
 
   // Process noise standard deviation yaw acceleration in rad/s^2
   std_yawdd_ = 2;
-  
+
   /**
    * DO NOT MODIFY measurement noise values below.
    * These are provided by the sensor manufacturer.
@@ -52,11 +52,11 @@ UKF::UKF() {
 
   // Radar measurement noise standard deviation radius change in m/s
   std_radrd_ = 0.3;
-  
+
   /**
-   * End DO NOT MODIFY section for measurement noise values 
+   * End DO NOT MODIFY section for measurement noise values
    */
-  
+
   /**
    * TODO: Complete the initialization. See ukf.h for other member properties.
    * Hint: one or more values initialized above might be wildly off...
@@ -70,7 +70,7 @@ UKF::UKF() {
 
   lambda_ = 3 - n_x_;
 
-  Xsig_pred_ = MatrixXd(n_x_, 2 * n_aug_ + 1);  
+  Xsig_pred_ = MatrixXd(n_x_, 2 * n_aug_ + 1);
   Xsig_pred_.fill(0.0);
 
   weights_ = VectorXd(2 * n_aug_ + 1);
@@ -84,16 +84,12 @@ UKF::UKF() {
 UKF::~UKF() {}
 
 void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
-  /**
-   * TODO: Complete this function! Make sure you switch between lidar and radar
-   * measurements.
-   */
 
   if (!is_initialized_)
   {
     if (meas_package.sensor_type_ == MeasurementPackage::LASER)
     {
-      
+
       x_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1], 0, 0, 0;
     }
     else if (meas_package.sensor_type_ == MeasurementPackage::RADAR)
@@ -109,7 +105,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     time_us_ = meas_package.timestamp_;
     is_initialized_ = true;
 
-    
+
     std:: cout << x_ << std::endl;
     std:: cout << "-------initialized--------" << std::endl;
 
@@ -128,7 +124,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
   // Update Measurement
   if (meas_package.sensor_type_ == MeasurementPackage::LASER)
-  { 
+  {
     UpdateLidar(meas_package);
   }
   else if (meas_package.sensor_type_ == MeasurementPackage::RADAR)
@@ -139,12 +135,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
 
 void UKF::Prediction(double delta_t) {
-  /**
-   * TODO: Complete this function! Estimate the object's location. 
-   * Modify the state vector, x_. Predict sigma points, the state, 
-   * and the state covariance matrix.
-   */
-   
+
    // Sigma Points Generation
    VectorXd x_aug = VectorXd(n_aug_);
 
@@ -209,7 +200,7 @@ void UKF::Prediction(double delta_t) {
     Xsig_pred_(2, i) = v_p;
     Xsig_pred_(3, i) = yaw_p;
     Xsig_pred_(4, i) = yawd_p;
-  } 
+  }
 
   //Predict mean and covariance
   VectorXd final_x = VectorXd::Zero(5);
@@ -236,14 +227,8 @@ void UKF::Prediction(double delta_t) {
 }
 
 void UKF::UpdateLidar(MeasurementPackage meas_package) {
-  /**
-   * TODO: Complete this function! Use lidar data to update the belief 
-   * about the object's position. Modify the state vector, x_, and 
-   * covariance, P_.
-   * You can also calculate the lidar NIS, if desired.
-   */
-  
-  int n_z_ = 2; //measurement state plane 
+
+  int n_z_ = 2; //measurement state plane
   MatrixXd Zsig = MatrixXd(n_z_, 2*n_aug_+1);//Sigma points projected in measurement Space
 
   VectorXd z_pred =VectorXd(n_z_);//mean of the predicted measurement
@@ -279,7 +264,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    R<< std_laspx_*std_laspx_,0,
         0,std_laspy_*std_laspy_;
   S = S + R;
-  
+
   MatrixXd Tc = MatrixXd(n_x_,n_z_);
   Tc.fill(0.0);
   for (int i=0; i<2*n_aug_+1; ++i){
@@ -308,14 +293,8 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 }
 
 void UKF::UpdateRadar(MeasurementPackage meas_package) {
-  /**
-   * TODO: Complete this function! Use radar data to update the belief 
-   * about the object's position. Modify the state vector, x_, and 
-   * covariance, P_.
-   * You can also calculate the radar NIS, if desired.
-   */
 
-    int n_z_ = 3; //measurement state plane 
+` int n_z_ = 3; //measurement state plane 
   MatrixXd Zsig = MatrixXd(n_z_, 2*n_aug_+1);//Sigma points projected in measurement Space
 
   VectorXd z_pred =VectorXd(n_z_);//mean of the predicted measurement
@@ -355,7 +334,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
         0,std_radphi_*std_radphi_,0,
         0,0,std_radrd_*std_radrd_;
   S = S + R;
-  
+
   MatrixXd Tc = MatrixXd(n_x_,n_z_);
   Tc.fill(0.0);
   for (int i=0; i<2*n_aug_+1; ++i){
