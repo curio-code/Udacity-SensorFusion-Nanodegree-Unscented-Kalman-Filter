@@ -24,6 +24,33 @@ The red spheres above cars represent the (x,y) lidar detection and the purple li
 
 ---
 
+## UKF Code Pipeline
+```
+* Prediction: 1. Generate Sigma Points
+              2. Predict Sigma Points
+              3. Predict Mean & Covariance
+              
+* Update:     1. Predict Measurement
+              2. Update State
+```
+---
+## CTRV Motion Model
+For this project, Constant turn rate and velocity magnitude model (CTRV) motion model has been used.
+State equation are derived as below.
+<img src="media/CTRV (1).png" />
+<img src="media/CTRV (2).png"/>
+<img src="media/CTRV (3).png"/>
+<img src="media/CTRV (4).png"/>
+<img src="media/CTRV (5).png"/>
+
+### <strong>Final Equation</strong>
+<img src="media/CTRV(6).png"/>
+
+```
+a = 1/2*((Δt)^2)*cos(ψk)⋅νa,k	
+b = 1/2*((Δt)^2)*sin(ψk)⋅νa,k	
+```
+
 ## Other Important Dependencies
 * cmake >= 3.5
   * All OSes: [click here for installation instructions](https://cmake.org/install/)
